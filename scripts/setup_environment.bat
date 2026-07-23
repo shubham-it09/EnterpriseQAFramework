@@ -77,17 +77,22 @@ echo.
 :: Install Dependencies
 :: ------------------------------------------------------------
 
-echo [INFO] Installing Python Dependencies...
+echo.
+echo [INFO] Checking Python Dependencies...
 
-pip install -r requirements.txt
+pip show pytest >nul 2>&1
 
 if errorlevel 1 (
-    echo.
-    echo [ERROR] Failed to install dependencies.
-    exit /b 1
-)
 
-echo [SUCCESS] Dependencies Installed.
+    echo [INFO] Installing Dependencies...
+
+    pip install -r requirements.txt
+
+) else (
+
+    echo [SUCCESS] Dependencies already installed.
+
+)
 
 echo.
 
@@ -111,9 +116,19 @@ echo.
 :: Install Playwright Browsers
 :: ------------------------------------------------------------
 
-echo [INFO] Installing Playwright Browsers...
+if not exist "browsers" (
 
-python -m playwright install
+    echo.
+    echo [INFO] Installing Playwright Browsers...
+
+    playwright install
+
+) else (
+
+    echo.
+    echo [SUCCESS] Playwright Browsers already installed.
+
+)
 
 if errorlevel 1 (
     echo.

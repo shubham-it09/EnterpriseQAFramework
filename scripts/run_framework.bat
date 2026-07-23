@@ -13,6 +13,39 @@ echo        Enterprise QA Framework Pipeline
 echo ============================================================
 echo.
 
+
+:: ------------------------------------------------------------
+:: Verify Framework Environment
+:: ------------------------------------------------------------
+
+if not exist ".venv\Scripts\activate.bat" (
+
+    echo.
+    echo ============================================================
+    echo     Virtual Environment Not Found
+    echo ============================================================
+    echo.
+
+    echo [INFO] Setting up framework...
+
+    call "%~dp0setup_environment.bat"
+
+    if errorlevel 1 (
+
+        echo.
+        echo [ERROR] Environment setup failed.
+
+        exit /b 1
+
+    )
+
+) else (
+
+    echo.
+    echo [SUCCESS] Virtual Environment Found.
+
+)
+
 :: ------------------------------------------------------------
 :: Clean Previous Execution
 :: ------------------------------------------------------------
