@@ -2,44 +2,6 @@
 echo ***** VERSION 2 *****
 setlocal
 
-
-echo.
-echo ============================================================
-echo DEBUG - Python Check
-echo ============================================================
-
-echo Current Directory:
-cd
-
-echo.
-
-echo PATH:
-echo %PATH%
-
-echo.
-
-echo Trying python --version...
-
-python --version
-
-echo.
-
-echo ERRORLEVEL=%ERRORLEVEL%
-
-echo.
-
-echo Trying py --version...
-
-py --version
-
-echo.
-
-echo ERRORLEVEL=%ERRORLEVEL%
-
-echo.
-
-pause
-
 echo.
 echo ============================================================
 echo      Enterprise QA Framework - Environment Setup
