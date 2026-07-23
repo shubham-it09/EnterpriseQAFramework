@@ -1,6 +1,5 @@
 @echo off
 echo ***** VERSION 2 *****
-pause
 setlocal
 
 echo.
