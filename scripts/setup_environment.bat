@@ -13,20 +13,7 @@ cd /d "%~dp0.."
 :: Verify Python
 :: ------------------------------------------------------------
 
-
-
-echo.
 echo [INFO] Checking Python...
-
-
-
-python --version
-
-if errorlevel 1 (
-    echo.
-    echo [ERROR] Python is not installed or not available in PATH.
-    exit /b 1
-)
 
 python --version >nul 2>&1
 
@@ -50,9 +37,15 @@ if not exist ".venv" (
 
     python -m venv .venv
 
+    if errorlevel 1 (
+        echo.
+        echo [ERROR] Failed to create Virtual Environment.
+        exit /b 1
+    )
+
 ) else (
 
-    echo [INFO] Virtual Environment already exists.
+    echo [SUCCESS] Virtual Environment already exists.
 
 )
 
@@ -90,28 +83,19 @@ echo.
 :: Install Dependencies
 :: ------------------------------------------------------------
 
-echo.
-echo [INFO] Checking Python Dependencies...
+echo [INFO] Installing / Verifying Python Dependencies...
 
-pip show pytest >nul 2>&1
+pip install -r requirements.txt
 
 if errorlevel 1 (
-
-    echo [INFO] Installing Dependencies...
-
-    pip install -r requirements.txt
-
-) else (
-
-    echo [SUCCESS] Dependencies already installed.
-
+    echo.
+    echo [ERROR] Failed to install Python dependencies.
+    exit /b 1
 )
 
-echo.
+echo [SUCCESS] Dependencies Installed.
 
-:: ------------------------------------------------------------
-:: Install Playwright Browsers
-:: ------------------------------------------------------------
+echo.
 
 :: ------------------------------------------------------------
 :: Configure Playwright Browser Location
@@ -131,33 +115,21 @@ echo.
 
 if not exist "browsers" (
 
-    echo.
     echo [INFO] Installing Playwright Browsers...
 
-    playwright install
+    python -m playwright install
+
+    if errorlevel 1 (
+        echo.
+        echo [ERROR] Failed to install Playwright Browsers.
+        exit /b 1
+    )
 
 ) else (
 
-    echo.
     echo [SUCCESS] Playwright Browsers already installed.
 
 )
-
-if errorlevel 1 (
-    echo.
-    echo [ERROR] Playwright browser installation failed.
-    exit /b 1
-)
-
-echo [SUCCESS] Playwright Browsers Installed.
-
-if errorlevel 1 (
-    echo.
-    echo [ERROR] Playwright browser installation failed.
-    exit /b 1
-)
-
-echo [SUCCESS] Playwright Browsers Installed.
 
 echo.
 
@@ -166,6 +138,8 @@ echo.
 :: ------------------------------------------------------------
 
 echo [INFO] Verifying Installation...
+
+python --version
 
 pytest --version
 
