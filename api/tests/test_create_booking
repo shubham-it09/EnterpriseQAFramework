@@ -1,0 +1,25 @@
+from api.models.create_booking_request import (
+    CreateBookingRequest
+)
+
+from utils.file_utils import FileUtils
+
+
+def test_create_booking(booking_business):
+    """
+    Verify booking can be created.
+    """
+
+    payload = FileUtils.read_json(
+        "testdata/api/create_booking.json"
+    )
+
+    request = CreateBookingRequest.from_dict(
+        payload
+    )
+
+    response = booking_business.create_booking(
+        request
+    )
+
+    assert response.status_code == 200

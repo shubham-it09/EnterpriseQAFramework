@@ -1,0 +1,11 @@
+{
+    "firstname": "Shubham",
+    "lastname": "Pandey",
+    "totalprice": 5000,
+    "depositpaid": true,
+    "bookingdates": {
+        "checkin": "2026-08-01",
+        "checkout": "2026-08-05"
+    },
+    "additionalneeds": "Breakfast"
+}

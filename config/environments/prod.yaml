@@ -1,0 +1,11 @@
+environment: qa
+
+base_url: https://demo.opencart.com/
+
+browser: chromium
+
+headless: false
+
+timeout: 30000
+
+slow_mo: 0

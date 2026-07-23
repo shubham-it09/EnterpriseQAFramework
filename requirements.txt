@@ -1,0 +1,7 @@
+playwright
+pytest
+pytest-playwright
+pyyaml
+pytest-xdist
+allure-pytest
+httpx
