@@ -13,9 +13,20 @@ cd /d "%~dp0.."
 :: Verify Python
 :: ------------------------------------------------------------
 
+
+
+echo.
 echo [INFO] Checking Python...
 
-where python
+
+
+python --version
+
+if errorlevel 1 (
+    echo.
+    echo [ERROR] Python is not installed or not available in PATH.
+    exit /b 1
+)
 
 python --version >nul 2>&1
 
