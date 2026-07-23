@@ -15,6 +15,8 @@ cd /d "%~dp0.."
 
 echo [INFO] Checking Python...
 
+where python
+
 python --version >nul 2>&1
 
 if errorlevel 1 (
