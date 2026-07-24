@@ -34,14 +34,16 @@ pipeline {
 
         stage('Execute Framework') {
 
-         environment {
-
-            ENVIRONMENT = "${params.ENVIRONMENT}"
-            BROWSER = "${params.BROWSER == 'DEFAULT' ? '' : params.BROWSER.toLowerCase()}"
-
-        }
-
             steps {
+
+                script {
+
+                    env.ENVIRONMENT = params.ENVIRONMENT.toLowerCase()
+
+                    env.BROWSER = params.BROWSER == 'DEFAULT'
+                        ? ''
+                        : params.BROWSER.toLowerCase()
+                }
 
                 bat "scripts\\run_framework.bat ${params.EXECUTION_TYPE.toLowerCase()} jenkins"
             }

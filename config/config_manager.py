@@ -66,7 +66,10 @@ class ConfigManager:
 
         self.runtime = RuntimeConfig()
 
-        environment = self.runtime.environment or environment
+        environment = self.runtime.environment
+
+        if environment in (None, "", "null"):
+            environment = "qa"
 
         config_path = (
             Path(__file__).parent
