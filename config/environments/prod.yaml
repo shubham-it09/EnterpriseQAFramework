@@ -1,11 +1,12 @@
-environment: qa
+environment: prod
 
-base_url: https://demo.opencart.com/
+base_url: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
 
 browser: chromium
 
 headless: false
 
-timeout: 30000
+timeout: 50000
 
 slow_mo: 0
+api_base_url: https://restful-booker.herokuapp.com
