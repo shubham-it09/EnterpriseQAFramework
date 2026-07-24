@@ -1,6 +1,15 @@
 pipeline {
 
     agent any
+    parameters {
+
+    choice(
+        name: 'EXECUTION_TYPE',
+        choices: ['UI', 'API', 'ALL'],
+        description: 'Select Test Suite'
+    )
+
+}
 
     stages {
 
@@ -21,7 +30,7 @@ pipeline {
         stage('Execute Framework') {
 
             steps {
-                bat 'scripts\\run_framework.bat all jenkins'
+                bat "scripts\\run_framework.bat ${params.EXECUTION_TYPE.toLowerCase()} jenkins"
             }
         }
     }
