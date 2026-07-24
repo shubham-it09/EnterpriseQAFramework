@@ -13,6 +13,11 @@ pipeline {
     choices: ['DEFAULT', 'CHROMIUM', 'FIREFOX', 'WEBKIT'],
     description: 'Browser'
     )
+    choice(
+    name: 'ENVIRONMENT',
+    choices: ['QA', 'UAT', 'PROD'],
+    description: 'Execution Environment'
+    )
 
 }
 
