@@ -57,16 +57,21 @@
 from pathlib import Path
 
 from config.yaml_reader import YamlReader
+from config.runtime_config import RuntimeConfig
 
 
 class ConfigManager:
 
     def __init__(self, environment: str = "qa"):
 
+        self.runtime = RuntimeConfig()
+
+        environment = self.runtime.environment or environment
+
         config_path = (
             Path(__file__).parent
             / "environments"
-            / f"{environment}.yaml"
+            / f"{environment.lower()}.yaml"
         )
 
         self.reader = YamlReader()
@@ -74,7 +79,7 @@ class ConfigManager:
 
     @property
     def browser(self) -> str:
-        return self.config.browser
+        return self.runtime.browser or self.config.browser
 
     @property
     def base_url(self) -> str:
