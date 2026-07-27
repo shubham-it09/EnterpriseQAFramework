@@ -429,70 +429,48 @@ stage('Execute Tests') {
     ----------------------------------------------------------
     */
 
-    post {
+   post {
 
-        always {
+            always {
 
-            /*
-            Generate Allure Report.
+                /*
+                Generate Allure Report.
+                */
 
-            Reads:
+                allure(
+                    includeProperties: false,
+                    jdk: '',
+                    results: [[path: 'artifacts/allure-results']]
+                )
 
-                artifacts/allure-results
+                /*
+                Archive execution artifacts.
+                */
 
-            Creates:
+                archiveArtifacts(
+                    artifacts: 'artifacts/**/*',
+                    fingerprint: true
+                )
+            }
 
-                Allure Dashboard
-            */
-
-            allure(
-
-                includeProperties: false,
-
-                jdk: '',
-
-                results: [[path: 'artifacts/allure-results']]
-
-            )
-
-
-            /*
-            Archive execution artifacts.
-
-            Includes:
-
-                Screenshots
-                Logs
-                Reports
-                Videos
-
-            */
-
-            archiveArtifacts(
-
-                artifacts: 'artifacts/**/*',
-
-                fingerprint: true
-
-            )
             success {
 
                 emailext(
                     to: 'shubham.it09@gmail.com',
                     subject: "✅ SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: """
-            Build Status : SUCCESS
+        Build Status : SUCCESS
 
-            Job Name     : ${env.JOB_NAME}
-            Build Number : ${env.BUILD_NUMBER}
+        Job Name     : ${env.JOB_NAME}
+        Build Number : ${env.BUILD_NUMBER}
 
-            Environment  : ${params.ENVIRONMENT}
-            Execution    : ${params.EXECUTION_TYPE}
-            Browser      : ${params.BROWSER}
+        Environment  : ${params.ENVIRONMENT}
+        Execution    : ${params.EXECUTION_TYPE}
+        Browser      : ${params.BROWSER}
 
-            Build URL:
-            ${env.BUILD_URL}
-            """
+        Build URL:
+        ${env.BUILD_URL}
+        """
                 )
 
             }
@@ -503,24 +481,22 @@ stage('Execute Tests') {
                     to: 'shubham.it09@gmail.com',
                     subject: "❌ FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: """
-            Build Status : FAILURE
+        Build Status : FAILURE
 
-            Job Name     : ${env.JOB_NAME}
-            Build Number : ${env.BUILD_NUMBER}
+        Job Name     : ${env.JOB_NAME}
+        Build Number : ${env.BUILD_NUMBER}
 
-            Environment  : ${params.ENVIRONMENT}
-            Execution    : ${params.EXECUTION_TYPE}
-            Browser      : ${params.BROWSER}
+        Environment  : ${params.ENVIRONMENT}
+        Execution    : ${params.EXECUTION_TYPE}
+        Browser      : ${params.BROWSER}
 
-            Build URL:
-            ${env.BUILD_URL}
-            """
+        Build URL:
+        ${env.BUILD_URL}
+        """
                 )
 
-}
+            }
 
         }
-
-    }
 
 }
