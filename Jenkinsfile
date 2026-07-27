@@ -263,51 +263,52 @@ pipeline {
         }
 
 
-        /*
-        ------------------------------------------------------
-        Stage : Execute Framework
-        ------------------------------------------------------
+       /*
+----------------------------------------------------------
+Stage : Execute Tests
+----------------------------------------------------------
 
-        Pass Jenkins parameters as Environment Variables.
+Runs UI/API test suites.
 
-        RuntimeConfig.py reads these variables.
+Execution Type
 
-        Then execute selected test suite.
+UI  -> UI only
 
-        ------------------------------------------------------
-        */
+API -> API only
 
-        stage('Execute Framework') {
+ALL -> UI and API in parallel
+
+----------------------------------------------------------
+*/
+
+stage('Execute Tests') {
+
+    parallel {
+
+        stage('Run UI Tests') {
+
+            when {
+
+                anyOf {
+
+                    expression {
+                        params.EXECUTION_TYPE == 'UI'
+                    }
+
+                    expression {
+                        params.EXECUTION_TYPE == 'ALL'
+                    }
+
+                }
+
+            }
 
             steps {
 
                 script {
 
-                    /*
-                    Runtime Environment
-
-                    QA
-                    UAT
-                    PROD
-                    */
-
                     env.ENVIRONMENT =
                         params.ENVIRONMENT.toLowerCase()
-
-
-                    /*
-                    Browser Override
-
-                    DEFAULT
-                        → Empty
-                        → ConfigManager uses YAML
-
-                    Otherwise
-
-                        chrome
-                        firefox
-                        webkit
-                    */
 
                     env.BROWSER =
                         params.BROWSER == 'DEFAULT'
@@ -316,25 +317,53 @@ pipeline {
 
                 }
 
+                bat 'scripts\\run_framework.bat ui jenkins'
 
-                /*
-                Execute requested suite.
+            }
 
-                UI
+        }
 
-                API
+        stage('Run API Tests') {
 
-                ALL
+            when {
 
-                */
+                anyOf {
 
-                bat "scripts\\run_framework.bat ${params.EXECUTION_TYPE.toLowerCase()} jenkins"
+                    expression {
+                        params.EXECUTION_TYPE == 'API'
+                    }
+
+                    expression {
+                        params.EXECUTION_TYPE == 'ALL'
+                    }
+
+                }
+
+            }
+
+            steps {
+
+                script {
+
+                    env.ENVIRONMENT =
+                        params.ENVIRONMENT.toLowerCase()
+
+                    env.BROWSER =
+                        params.BROWSER == 'DEFAULT'
+                        ? ''
+                        : params.BROWSER.toLowerCase()
+
+                }
+
+                bat 'scripts\\run_framework.bat api jenkins'
 
             }
 
         }
 
     }
+
+}
 
 
 
