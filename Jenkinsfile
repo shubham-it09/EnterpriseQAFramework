@@ -179,7 +179,7 @@ pipeline {
 
         choice(
             name: 'BROWSER',
-            choices: ['DEFAULT', 'CHROMIUM', 'FIREFOX', 'WEBKIT'],
+            choices: ['DEFAULT', 'CHROMIUM', 'FIREFOX', 'WEBKIT','ALL'],
             description: 'Browser'
         )
 
