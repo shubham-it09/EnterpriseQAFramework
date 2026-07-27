@@ -230,6 +230,42 @@ pipeline {
 
         }
 
+        /*
+----------------------------------------------------------
+Stage : Build Information
+----------------------------------------------------------
+
+Customize Jenkins build name.
+
+Example:
+
+#25 QA | UI | CHROMIUM
+
+----------------------------------------------------------
+*/
+
+stage('Build Information') {
+
+    steps {
+
+        script {
+
+            currentBuild.displayName =
+                "#${env.BUILD_NUMBER} | " +
+                "${params.ENVIRONMENT} | " +
+                "${params.EXECUTION_TYPE} | " +
+                "${params.BROWSER}"
+            currentBuild.description =
+                    "Environment: ${params.ENVIRONMENT}<br>" +
+                    "Execution: ${params.EXECUTION_TYPE}<br>" +
+                    "Browser: ${params.BROWSER}"
+
+                }
+
+            }
+
+        }
+
 
         /*
         ------------------------------------------------------
