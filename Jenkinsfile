@@ -457,32 +457,32 @@ stage('Execute Tests') {
 
                 emailext(
                     to: 'shubham.it09@gmail.com',
-                    subject: "SUCCESS - ${env.JOB_NAME}",
-                    body: "This is a Jenkins test email.",
-                    mimeType: 'text/plain'
-        Build Status : SUCCESS
+                    subject: "SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    mimeType: 'text/plain',
+                    body: """
+            Build Status : SUCCESS
 
-        Job Name     : ${env.JOB_NAME}
-        Build Number : ${env.BUILD_NUMBER}
+            Job Name     : ${env.JOB_NAME}
+            Build Number : ${env.BUILD_NUMBER}
 
-        Environment  : ${params.ENVIRONMENT}
-        Execution    : ${params.EXECUTION_TYPE}
-        Browser      : ${params.BROWSER}
+            Environment  : ${params.ENVIRONMENT}
+            Execution    : ${params.EXECUTION_TYPE}
+            Browser      : ${params.BROWSER}
 
-        Build URL:
-        ${env.BUILD_URL}
-        """
+            Build URL:
+            ${env.BUILD_URL}
+            """
                 )
 
             }
 
             failure {
 
-                emailext(
-                    to: 'shubham.it09@gmail.com',
-                    subject: "❌ FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    body: "This is a Jenkins test email.",
-                    mimeType: 'text/plain'
+            emailext(
+                to: 'shubham.it09@gmail.com',
+                subject: "FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                mimeType: 'text/plain',
+                body: """
         Build Status : FAILURE
 
         Job Name     : ${env.JOB_NAME}
@@ -495,9 +495,9 @@ stage('Execute Tests') {
         Build URL:
         ${env.BUILD_URL}
         """
-                )
+            )
 
-            }
+        }
 
         }
 
