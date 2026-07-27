@@ -317,7 +317,7 @@ stage('Execute Tests') {
                         : params.BROWSER.toLowerCase()
 
                 }
-                timeouttimeout(time: 30, unit: 'MINUTES') {
+                timeout(time: 30, unit: 'MINUTES') {
                 retry(2) {
 
                  bat 'scripts\\run_framework.bat ui jenkins'
