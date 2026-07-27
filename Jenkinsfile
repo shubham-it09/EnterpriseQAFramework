@@ -284,6 +284,7 @@ ALL -> UI and API in parallel
 stage('Execute Tests') {
 
     parallel {
+        failFast: true,
 
         stage('Run UI Tests') {
 
@@ -316,8 +317,13 @@ stage('Execute Tests') {
                         : params.BROWSER.toLowerCase()
 
                 }
+                timeouttimeout(time: 30, unit: 'MINUTES') {
+                retry(2) {
 
-                bat 'scripts\\run_framework.bat ui jenkins'
+                 bat 'scripts\\run_framework.bat ui jenkins'
+
+                 }
+                }
 
             }
 
@@ -354,8 +360,11 @@ stage('Execute Tests') {
                         : params.BROWSER.toLowerCase()
 
                 }
-
-                bat 'scripts\\run_framework.bat api jenkins'
+                timeout(time: 30, unit: 'MINUTES') {
+                retry(2){
+                    bat 'scripts\\run_framework.bat api jenkins'
+                }
+                }
 
             }
 
