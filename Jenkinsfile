@@ -457,8 +457,9 @@ stage('Execute Tests') {
 
                 emailext(
                     to: 'shubham.it09@gmail.com',
-                    subject: "✅ SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    body: """
+                    subject: "SUCCESS - ${env.JOB_NAME}",
+                    body: "This is a Jenkins test email.",
+                    mimeType: 'text/plain'
         Build Status : SUCCESS
 
         Job Name     : ${env.JOB_NAME}
@@ -480,7 +481,8 @@ stage('Execute Tests') {
                 emailext(
                     to: 'shubham.it09@gmail.com',
                     subject: "❌ FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                    body: """
+                    body: "This is a Jenkins test email.",
+                    mimeType: 'text/plain'
         Build Status : FAILURE
 
         Job Name     : ${env.JOB_NAME}
