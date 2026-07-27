@@ -50,7 +50,7 @@ if not exist ".venv\Scripts\activate.bat" (
 :: Clean Previous Execution
 :: ------------------------------------------------------------
 
-call "%~dp0clean_reports.bat"
+::call "%~dp0clean_reports.bat"
 
 :: ------------------------------------------------------------
 :: Initialize Pipeline Exit Code
