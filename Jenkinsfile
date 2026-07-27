@@ -475,6 +475,49 @@ stage('Execute Tests') {
                 fingerprint: true
 
             )
+            success {
+
+                emailext(
+                    to: 'shubham.it09@gmail.com',
+                    subject: "✅ SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
+            Build Status : SUCCESS
+
+            Job Name     : ${env.JOB_NAME}
+            Build Number : ${env.BUILD_NUMBER}
+
+            Environment  : ${params.ENVIRONMENT}
+            Execution    : ${params.EXECUTION_TYPE}
+            Browser      : ${params.BROWSER}
+
+            Build URL:
+            ${env.BUILD_URL}
+            """
+                )
+
+            }
+
+            failure {
+
+                emailext(
+                    to: 'shubham.it09@gmail.com',
+                    subject: "❌ FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
+            Build Status : FAILURE
+
+            Job Name     : ${env.JOB_NAME}
+            Build Number : ${env.BUILD_NUMBER}
+
+            Environment  : ${params.ENVIRONMENT}
+            Execution    : ${params.EXECUTION_TYPE}
+            Browser      : ${params.BROWSER}
+
+            Build URL:
+            ${env.BUILD_URL}
+            """
+                )
+
+}
 
         }
 
