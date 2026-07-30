@@ -39,7 +39,7 @@ pipeline {
 
 
     /*
-    ----------------------------------------------------------
+    ----------------------------    ------------------------------
     Pipeline Options
     ----------------------------------------------------------
     Global pipeline behaviour.
@@ -112,11 +112,12 @@ pipeline {
 
     }
 
-    triggers {
+    // triggers {
 
-        cron('H 2 * * *')
+    //     cron('H 2 * * *')
 
-    }
+    // }
+
 
 
     /*
@@ -161,7 +162,7 @@ pipeline {
 
         choice(
             name: 'ENVIRONMENT',
-            choices: ['QA', 'UAT', 'PROD'],
+            choices: ['qa','uat','prod'],
             description: 'Execution Environment'
         )
 
@@ -178,9 +179,14 @@ pipeline {
 
         choice(
             name: 'BROWSER',
-            choices: ['DEFAULT', 'CHROMIUM', 'FIREFOX', 'WEBKIT','ALL'],
+            choices: [['chromium','firefox','webkit']],
             description: 'Browser'
         )
+         booleanParam(
+                    name: 'HEADLESS',
+                    defaultValue: true,
+                    description: 'Run in headless mode'
+                )
 
     }
 
@@ -279,7 +285,8 @@ stage('Build Information') {
         stage('Verify Docker') {
             steps {
                 bat 'echo ===== PATH ====='
-                bat 'echo %PATH%'
+                bat 'docker info'
+                bat 'docker compose version'
                 bat 'echo.'
                 bat 'echo ===== WHERE DOCKER ====='
                 bat 'where docker'
@@ -292,7 +299,7 @@ stage('Build Information') {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker compose build --pull'
+                bat 'docker compose build --pull --no-cache'
             }
         }
 
@@ -316,10 +323,17 @@ ALL -> UI and API in parallel
 */
 
 stage('Execute Tests') {
-    steps {
-        bat 'docker compose up --abort-on-container-exit'
-    }
-    }
+            steps {
+                bat """
+                set EXECUTION_TYPE=${params.EXECUTION_TYPE}
+                set ENVIRONMENT=${params.ENVIRONMENT}
+                set BROWSER=${params.BROWSER}
+                set HEADLESS=${params.HEADLESS}
+
+                docker compose up --abort-on-container-exit
+                """
+            }
+        }
 
     }
 

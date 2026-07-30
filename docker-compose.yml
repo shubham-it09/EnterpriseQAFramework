@@ -8,12 +8,13 @@ services:
       ENVIRONMENT: ${ENVIRONMENT:-qa}
       BROWSER: ${BROWSER:-chromium}
       EXECUTION_TYPE: ${EXECUTION_TYPE:-ui}
-      
+      HEADLESS: ${HEADLESS:-true}
 
     volumes:
       - ./artifacts:/app/artifacts
 
     command: >
       pytest
-    
+      -m ${EXECUTION_TYPE}
+
     restart: "no"
