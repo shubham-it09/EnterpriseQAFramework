@@ -7,19 +7,12 @@
 This pipeline performs:
 
 1. Checkout latest code from GitHub
-2. Setup Python Environment
-3. Execute requested test suite
-4. Publish Allure Report
-5. Archive Execution Artifacts
+2. Verify Docker
+3. Build Docker Image
+4. Execute Docker Container
+5. Publish Allure Report
+6. Archive Execution Artifacts
 
-Future Enhancements:
---------------------
-✓ Parallel UI/API Execution
-✓ Docker
-✓ Retry
-✓ Notifications
-✓ GitHub Actions
-✓ Azure DevOps
 
 ==============================================================
 */
@@ -293,7 +286,7 @@ stage('Build Information') {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker compose build'
+                bat 'docker compose build --pull'
             }
         }
 
@@ -317,96 +310,9 @@ ALL -> UI and API in parallel
 */
 
 stage('Execute Tests') {
-
-    parallel  {
-        
-
-        stage('Run UI Tests') {
-
-            when {
-
-                anyOf {
-
-                    expression {
-                        params.EXECUTION_TYPE == 'UI'
-                    }
-
-                    expression {
-                        params.EXECUTION_TYPE == 'ALL'
-                    }
-
-                }
-
-            }
-
-            steps {
-
-                script {
-
-                    env.ENVIRONMENT =
-                        params.ENVIRONMENT.toLowerCase()
-
-                    env.BROWSER =
-                        params.BROWSER == 'DEFAULT'
-                        ? ''
-                        : params.BROWSER.toLowerCase()
-
-                }
-                
-                
-
-                 bat 'scripts\\run_framework.bat ui jenkins'
-
-                 
-                
-
-            }
-
-        }
-
-        stage('Run API Tests') {
-
-            when {
-
-                anyOf {
-
-                    expression {
-                        params.EXECUTION_TYPE == 'API'
-                    }
-
-                    expression {
-                        params.EXECUTION_TYPE == 'ALL'
-                    }
-
-                }
-
-            }
-
-            steps {
-
-                script {
-
-                    env.ENVIRONMENT =
-                        params.ENVIRONMENT.toLowerCase()
-
-                    env.BROWSER =
-                        params.BROWSER == 'DEFAULT'
-                        ? ''
-                        : params.BROWSER.toLowerCase()
-
-                }
-               
-                    bat 'scripts\\run_framework.bat api jenkins'
-                
-                
-
-            }
-
-        }
-
+    steps {
+        bat 'docker compose up --abort-on-container-exit'
     }
-
-}
     }
 
 
@@ -426,19 +332,15 @@ stage('Execute Tests') {
 
             always {
 
-                /*
-                Generate Allure Report.
-                */
+                echo 'Stopping Docker Containers...'
+
+                bat 'docker compose down'
 
                 allure(
                     includeProperties: false,
                     jdk: '',
                     results: [[path: 'artifacts/allure-results']]
                 )
-
-                /*
-                Archive execution artifacts.
-                */
 
                 archiveArtifacts(
                     artifacts: 'artifacts/**/*',
