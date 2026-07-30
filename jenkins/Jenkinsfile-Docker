@@ -162,7 +162,7 @@ pipeline {
 
         choice(
             name: 'ENVIRONMENT',
-            choices: ['qa','uat','prod'],
+            choices: ['QA', 'UAT', 'PROD'],
             description: 'Execution Environment'
         )
 
@@ -179,7 +179,7 @@ pipeline {
 
         choice(
             name: 'BROWSER',
-            choices: [['chromium','firefox','webkit']],
+            choices: ['DEFAULT', 'CHROMIUM', 'FIREFOX', 'WEBKIT','ALL'],
             description: 'Browser'
         )
          booleanParam(
