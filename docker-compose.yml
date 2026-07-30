@@ -15,6 +15,3 @@ services:
 
     command: >
       pytest
-      -m ${EXECUTION_TYPE}
-
-    restart: "no"
