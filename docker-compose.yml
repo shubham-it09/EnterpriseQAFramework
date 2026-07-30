@@ -14,4 +14,12 @@ services:
       - ./artifacts:/app/artifacts
 
     command: >
-      pytest
+      sh -c "
+      if [ \"$EXECUTION_TYPE\" = \"ui\" ]; then
+          pytest tests;
+      elif [ \"$EXECUTION_TYPE\" = \"api\" ]; then
+          pytest api/tests;
+      else
+          pytest tests api/tests;
+      fi
+      "
