@@ -278,6 +278,12 @@ stage('Build Information') {
 
         stage('Verify Docker') {
             steps {
+                bat 'echo ===== PATH ====='
+                bat 'echo %PATH%'
+                bat 'echo.'
+                bat 'echo ===== WHERE DOCKER ====='
+                bat 'where docker'
+                bat 'echo.'
                 bat 'docker --version'
                 bat 'docker compose version'
             }
