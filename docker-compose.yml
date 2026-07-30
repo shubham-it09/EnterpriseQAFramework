@@ -1,0 +1,19 @@
+services:
+  playwright:
+    build: .
+
+    container_name: enterprise-playwright
+
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-qa}
+      BROWSER: ${BROWSER:-chromium}
+      EXECUTION_TYPE: ${EXECUTION_TYPE:-ui}
+      
+
+    volumes:
+      - ./artifacts:/app/artifacts
+
+    command: >
+      pytest
+    
+    restart: "no"

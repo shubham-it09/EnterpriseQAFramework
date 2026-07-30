@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+
+# Python
+.venv
+venv
+__pycache__
+.pytest_cache
+*.pyc
+*.pyo
+*.pyd
+
+# Reports
+allure-results
+allure-report
+artifacts
+
+# IDE
+.idea
+.vscode
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# Node
+node_modules
+
+# Documentation
+README.md
+
+# Logs
+*.log
+
+# Build
+dist
+build
+
+# Test videos/screenshots/traces
+test-results
+playwright-report
+
+# Docker
+Dockerfile.old
+docker-compose.override.yml

@@ -20,6 +20,13 @@ class BrowserManager:
 
             case "chromium":
                 print("Chromium option matched")
+                print("***** INSIDE DOCKER *****")
+                print("=" * 60)
+                print("Running inside BrowserManager")
+                print("config.headless :", config.headless, type(config.headless))
+                print("config.browser  :", config.browser)
+                print("config.base_url :", config.base_url)
+                print("=" * 60)
                 self.browser = self.playwright.chromium.launch(
                     headless=config.headless,
                     slow_mo=config.slow_mo

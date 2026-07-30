@@ -1,0 +1,37 @@
+name: Enterprise Playwright Framework
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  playwright-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker compose build
+
+      - name: Execute UI + API Tests
+        run: docker compose up --abort-on-container-exit
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: artifacts/allure-results
+
+      - name: Shutdown Containers
+        if: always()
+        run: docker compose down

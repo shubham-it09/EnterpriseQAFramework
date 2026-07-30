@@ -1,5 +1,8 @@
 import pytest
+from pathlib import Path
 
+SCREENSHOT_DIR = Path("artifacts/screenshots")
+SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
 
 @pytest.fixture
 def pw_context(pw_browser):
