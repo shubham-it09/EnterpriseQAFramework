@@ -10,3 +10,20 @@ timeout: 50000
 
 slow_mo: 0
 api_base_url: https://restful-booker.herokuapp.com
+
+ai_provider: openai
+
+ai_temperature: 0.2
+
+ai_max_tokens: 1500
+
+ai_timeout: 60
+
+
+openai_model: gpt-5
+
+
+groq_model: llama-3.3-70b-versatile
+
+ollama_host: http://localhost:11434
+ollama_model: llama3

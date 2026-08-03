@@ -14,3 +14,14 @@ class RuntimeConfig:
     @property
     def headless(self) -> str | None:
         return os.getenv("HEADLESS")
+
+    @property
+    def ai_provider(self) -> str | None:
+        """
+        Returns AI provider supplied through runtime
+        environment variables.
+
+        Example:
+            AI_PROVIDER=openai
+        """
+        return os.getenv("AI_PROVIDER")

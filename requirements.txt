@@ -5,3 +5,9 @@ pyyaml
 pytest-xdist
 allure-pytest
 httpx
+openai>=1.99.0
+groq>=0.31.0
+python-dotenv
+
+
+

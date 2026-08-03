@@ -58,6 +58,9 @@ from pathlib import Path
 
 from config.yaml_reader import YamlReader
 from config.runtime_config import RuntimeConfig
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 
 class ConfigManager:
@@ -103,6 +106,37 @@ class ConfigManager:
     @property
     def api_base_url(self) -> str:
         return self.config.api_base_url
+
+    @property
+    def ai_provider(self):
+        return self.runtime.ai_provider or self.config.ai_provider
+
+    @property
+    def ai_temperature(self):
+        return self.config.ai_temperature
+
+
+    @property
+    def ai_max_tokens(self):
+        return self.config.ai_max_tokens
+
+
+    @property
+    def ai_timeout(self):
+        return self.config.ai_timeout
+
+
+    @property
+    def openai_api_key(self):
+        return os.getenv("OPENAI_API_KEY")
+    @property
+    def groq_api_key(self):
+        return os.getenv("GROQ_API_KEY")
+
+
+    @property
+    def openai_model(self):
+        return self.config.openai_model
 
 
 

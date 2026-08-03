@@ -8,8 +8,25 @@ pytest_plugins = [
     "fixtures.screenshot_fixture",
     "api.fixtures.api_client_fixture",
     "fixtures.config_fixture",
-    "fixtures.config_fixture",
     "api.fixtures.booking_business_fixture",
     "api.fixtures.auth_business_fixture",
+   
 
 ]
+
+import pytest
+
+from core.test_failure_handler import TestFailureHandler
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+
+    outcome = yield
+
+    report = outcome.get_result()
+
+    TestFailureHandler.handle(
+        item=item,
+        call=call,
+        report=report
+    )

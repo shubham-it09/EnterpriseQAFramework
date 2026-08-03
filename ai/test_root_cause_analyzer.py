@@ -30,3 +30,9 @@ def test_root_cause_analyzer():
     
 
     assert response.success
+
+def test_ai_failure(page):
+
+    page.goto("https://opensource-demo.orangehrmlive.com/")
+
+    assert False, "Intentional failure"

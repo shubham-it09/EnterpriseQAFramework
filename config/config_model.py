@@ -32,3 +32,19 @@ class FrameworkConfig:
     timeout: int
     slow_mo: int
     api_base_url: str
+    ai_provider: str
+
+    ai_temperature: float
+
+    ai_max_tokens: int
+
+    ai_timeout: int
+
+    
+    openai_model: str
+
+    
+    groq_model: str
+
+    ollama_host: str
+    ollama_model: str
