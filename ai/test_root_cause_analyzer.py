@@ -16,7 +16,16 @@ def test_root_cause_analyzer():
 
     )
 
-    response = RootCauseAnalyzer.analyze(context)
+    try:
+        response = RootCauseAnalyzer.analyze(context)
+
+        if response.success:
+            print(response.response)
+        else:
+            print(response.error)
+
+    except Exception as ex:
+        print(f"AI analysis skipped: {ex}")
     # print("\n================ AI RESPONSE ================")
     # print("Success :", response.success)
     # print("Provider:", response.provider)

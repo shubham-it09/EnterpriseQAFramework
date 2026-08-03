@@ -9,6 +9,10 @@ services:
       BROWSER: ${BROWSER:-chromium}
       EXECUTION_TYPE: ${EXECUTION_TYPE:-ui}
       HEADLESS: ${HEADLESS:-true}
+       # AI Configuration
+      AI_PROVIDER: ${AI_PROVIDER:-openai}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      GROQ_API_KEY: ${GROQ_API_KEY}
 
     volumes:
       - ./artifacts:/app/artifacts
