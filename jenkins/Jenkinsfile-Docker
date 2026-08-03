@@ -331,79 +331,106 @@ ALL -> UI and API in parallel
 ----------------------------------------------------------
 */
 
+// stage('Execute Tests') {
+
+//             parallel {
+
+//                 stage('Run UI Tests') {
+
+//                     when {
+//                         anyOf {
+//                             expression { params.EXECUTION_TYPE == 'UI' }
+//                             expression { params.EXECUTION_TYPE == 'ALL' }
+//                         }
+//                     }
+
+//                     steps {
+
+//                         script {
+
+//                             env.ENVIRONMENT =
+//                                 params.ENVIRONMENT.toLowerCase()
+
+//                             env.BROWSER =
+//                                 params.BROWSER == 'DEFAULT'
+//                                 ? ''
+//                                 : params.BROWSER.toLowerCase()
+
+//                             env.EXECUTION_TYPE = "ui"
+
+//                             env.HEADLESS = params.HEADLESS.toString().toLowerCase()
+
+//                         }
+
+//                         bat '''
+//                             docker compose up --build --abort-on-container-exit
+//                             docker compose down
+//                         '''
+//                     }
+//                 }
+
+//                 stage('Run API Tests') {
+
+//                     when {
+//                         anyOf {
+//                             expression { params.EXECUTION_TYPE == 'API' }
+//                             expression { params.EXECUTION_TYPE == 'ALL' }
+//                         }
+//                     }
+
+//                     steps {
+
+//                         script {
+
+//                             env.ENVIRONMENT =
+//                                 params.ENVIRONMENT.toLowerCase()
+
+//                             env.BROWSER =
+//                                 params.BROWSER == 'DEFAULT'
+//                                 ? ''
+//                                 : params.BROWSER.toLowerCase()
+
+//                             env.EXECUTION_TYPE = "api"
+
+//                             env.HEADLESS = params.HEADLESS.toString().toLowerCase()
+
+//                         }
+
+//                         bat '''
+//                             docker compose up --build --abort-on-container-exit
+//                             docker compose down
+//                         '''
+//                     }
+//                 }
+//             }
+//         }
+
 stage('Execute Tests') {
 
-            parallel {
+    steps {
 
-                stage('Run UI Tests') {
+        script {
 
-                    when {
-                        anyOf {
-                            expression { params.EXECUTION_TYPE == 'UI' }
-                            expression { params.EXECUTION_TYPE == 'ALL' }
-                        }
-                    }
+            env.ENVIRONMENT = params.ENVIRONMENT.toLowerCase()
 
-                    steps {
+            env.BROWSER =
+                params.BROWSER == 'DEFAULT'
+                    ? ''
+                    : params.BROWSER.toLowerCase()
 
-                        script {
+            env.EXECUTION_TYPE =
+                params.EXECUTION_TYPE.toLowerCase()
 
-                            env.ENVIRONMENT =
-                                params.ENVIRONMENT.toLowerCase()
-
-                            env.BROWSER =
-                                params.BROWSER == 'DEFAULT'
-                                ? ''
-                                : params.BROWSER.toLowerCase()
-
-                            env.EXECUTION_TYPE = "ui"
-
-                            env.HEADLESS = params.HEADLESS.toString().toLowerCase()
-
-                        }
-
-                        bat '''
-                            docker compose up --build --abort-on-container-exit
-                            docker compose down
-                        '''
-                    }
-                }
-
-                stage('Run API Tests') {
-
-                    when {
-                        anyOf {
-                            expression { params.EXECUTION_TYPE == 'API' }
-                            expression { params.EXECUTION_TYPE == 'ALL' }
-                        }
-                    }
-
-                    steps {
-
-                        script {
-
-                            env.ENVIRONMENT =
-                                params.ENVIRONMENT.toLowerCase()
-
-                            env.BROWSER =
-                                params.BROWSER == 'DEFAULT'
-                                ? ''
-                                : params.BROWSER.toLowerCase()
-
-                            env.EXECUTION_TYPE = "api"
-
-                            env.HEADLESS = params.HEADLESS.toString().toLowerCase()
-
-                        }
-
-                        bat '''
-                            docker compose up --build --abort-on-container-exit
-                            docker compose down
-                        '''
-                    }
-                }
-            }
+            env.HEADLESS =
+                params.HEADLESS.toString().toLowerCase()
         }
+
+        bat '''
+            docker compose up --build --abort-on-container-exit
+            docker compose down
+        '''
+    }
+}
 
     }
 
