@@ -24,6 +24,7 @@ from pathlib import Path
 
 from ai.analyzers.root_cause_analyzer import RootCauseAnalyzer
 from ai.collectors.failure_collector import FailureCollector
+from ai.generators.bug_report_generator import BugReportGenerator
 
 
 class TestFailureHandler:
@@ -119,4 +120,6 @@ class TestFailureHandler:
             timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         )
 
-        RootCauseAnalyzer.analyze(context)
+        response = RootCauseAnalyzer.analyze(context)
+        context.root_cause = response.response
+        BugReportGenerator.generate(context)

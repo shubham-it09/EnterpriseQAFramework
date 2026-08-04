@@ -11,7 +11,7 @@ Collects execution details from failed Playwright tests.
 from dataclasses import dataclass
 
 
-from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass(slots=True)
@@ -35,6 +35,8 @@ class FailureContext:
     network_logs: str = ""
 
     timestamp: str = ""
+     # New field
+    root_cause: Optional[str] = None
 
 
 class FailureCollector:
